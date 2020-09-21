@@ -3,9 +3,7 @@ package com.example.todo.rest;
 import com.example.todo.entities.WorkOrderEntity;
 import com.example.todo.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,4 +23,17 @@ public class ToDoRestController {
         return restService.findAllWorkOrders();
     }
 
+    @GetMapping("/workorders/{employeeId}")
+    public List<WorkOrderEntity> getWorkOrdersForEmployee(@PathVariable int employeeId) {
+        return restService.findAllWorkOrdersForEmployee(employeeId);
+    }
+
+   /* @PostMapping("/workorders")
+    public WorkOrderEntity addNewWorkOrder(WorkOrderEntity workOrder) {
+
+        workOrder.setId(0);
+        restService.saveNewWorkOrder(workOrder);
+        return workOrder;
+
+    }*/
 }

@@ -35,7 +35,14 @@ public class WorkOrderDAOHibernate implements WorkOrderDAO {
 
     @Override
     public List<WorkOrderEntity> findAllWorkOrdersForEmployee(int employeeId) {
-        return null;
+
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query theQuery = currentSession.createQuery("from WorkOrderEntity where employeeId=:employeeId");
+        theQuery.setParameter("employeeId", employeeId);
+        List<WorkOrderEntity> workOrders = theQuery.getResultList();
+
+        return workOrders;
     }
 
     @Override
@@ -51,6 +58,8 @@ public class WorkOrderDAOHibernate implements WorkOrderDAO {
     @Override
     public void saveNewWorkOrder(WorkOrderEntity workOrder) {
 
+        Session currentSession = entityManager.unwrap(Session.class);
+        //currentSession.saveOrUpdate(workOrder);
     }
 
     @Override

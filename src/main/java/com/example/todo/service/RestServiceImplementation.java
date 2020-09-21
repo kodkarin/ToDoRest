@@ -27,7 +27,7 @@ public class RestServiceImplementation implements RestService {
 
     @Override
     public List<WorkOrderEntity> findAllWorkOrdersForEmployee(int employeeId) {
-        return null;
+        return workOrderDAO.findAllWorkOrdersForEmployee(employeeId);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class RestServiceImplementation implements RestService {
 
     @Override
     public void saveNewWorkOrder(WorkOrderEntity workOrder) {
-
+        workOrderDAO.saveNewWorkOrder(workOrder);
     }
 
     @Override
