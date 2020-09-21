@@ -1,0 +1,18 @@
+package com.example.todo.dao;
+
+import com.example.todo.entities.EmployeeEntity;
+import com.example.todo.entities.LoginEntity;
+import com.example.todo.entities.WorkOrderEntity;
+
+import java.util.List;
+
+public interface WorkOrderDAO {
+    public List<WorkOrderEntity> findAllWorkOrders();
+    public List<WorkOrderEntity> findAllWorkOrdersForEmployee(int employeeId);
+    public List<WorkOrderEntity> findWorkOrdersByStatus(int status);
+    public WorkOrderEntity findWorkOrderById(int id);
+
+    public void saveNewWorkOrder(WorkOrderEntity workOrder);
+    public void updateWorkOrder(WorkOrderEntity workOrder);
+    public void deleteWorkOrderById(int workOrderId);
+}
