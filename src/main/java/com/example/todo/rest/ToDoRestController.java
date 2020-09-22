@@ -28,11 +28,18 @@ public class ToDoRestController {
         return restService.findAllWorkOrdersForEmployee(employeeId);
     }
 
-   /* @PostMapping("/workorders")
-    public WorkOrderEntity addNewWorkOrder(WorkOrderEntity workOrder) {
+    @PutMapping("/workorders")
+    public WorkOrderEntity updateWorkOrder(@RequestBody WorkOrderEntity workOrder) {
+
+        restService.saveWorkOrder(workOrder);
+        return workOrder;
+    }
+
+    /*@PostMapping("/workorders")
+    public WorkOrderEntity addNewWorkOrder(@RequestBody WorkOrderEntity workOrder) {
 
         workOrder.setId(0);
-        restService.saveNewWorkOrder(workOrder);
+        restService.saveWorkOrder(workOrder);
         return workOrder;
 
     }*/

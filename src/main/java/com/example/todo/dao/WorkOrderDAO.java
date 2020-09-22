@@ -12,7 +12,6 @@ public interface WorkOrderDAO {
     public List<WorkOrderEntity> findWorkOrdersByStatus(int status);
     public WorkOrderEntity findWorkOrderById(int id);
 
-    public void saveNewWorkOrder(WorkOrderEntity workOrder);
-    public void updateWorkOrder(WorkOrderEntity workOrder);
+    public void saveWorkOrder(WorkOrderEntity workOrder);
     public void deleteWorkOrderById(int workOrderId);
 }

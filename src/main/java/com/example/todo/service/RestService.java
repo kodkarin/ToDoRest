@@ -13,7 +13,6 @@ public interface RestService {
     public WorkOrderEntity findWorkOrderById(int id);
     public EmployeeEntity findEmployeeById(int id);
     public EmployeeEntity loginEmployee(LoginEntity login);
-    public void saveNewWorkOrder(WorkOrderEntity workOrder);
-    public void updateWorkOrder(WorkOrderEntity workOrder);
+    public void saveWorkOrder(WorkOrderEntity workOrder);
     public void deleteWorkOrderById(int workOrderId);
 }

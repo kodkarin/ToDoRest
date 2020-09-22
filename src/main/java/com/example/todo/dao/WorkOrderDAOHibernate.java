@@ -56,15 +56,10 @@ public class WorkOrderDAOHibernate implements WorkOrderDAO {
     }
 
     @Override
-    public void saveNewWorkOrder(WorkOrderEntity workOrder) {
+    public void saveWorkOrder(WorkOrderEntity workOrder) {
 
         Session currentSession = entityManager.unwrap(Session.class);
-        //currentSession.saveOrUpdate(workOrder);
-    }
-
-    @Override
-    public void updateWorkOrder(WorkOrderEntity workOrder) {
-
+        currentSession.saveOrUpdate(workOrder);
     }
 
     @Override
