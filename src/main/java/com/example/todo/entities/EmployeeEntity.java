@@ -1,7 +1,11 @@
 package com.example.todo.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Herman
@@ -24,6 +28,12 @@ public class EmployeeEntity implements Serializable {
 
     @Column(name = "telephone_no")
     private String telephoneNo;
+
+    @JsonManagedReference (value = "workOrder-employee")
+    @OneToMany(mappedBy = "employee",
+            cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    private List<WorkOrderEntity> workOrders;
 
     public EmployeeEntity() {
         // No-arg constructor
@@ -59,6 +69,22 @@ public class EmployeeEntity implements Serializable {
 
     public String getTelephoneNo() {
         return telephoneNo;
+    }
+
+    public List<WorkOrderEntity> getWorkOrders() {
+        return workOrders;
+    }
+
+    public void setWorkOrders(List<WorkOrderEntity> workOrders) {
+        this.workOrders = workOrders;
+    }
+
+    public void addWorkOrder(WorkOrderEntity workOrder) {
+        if(workOrders == null) {
+            workOrders = new ArrayList<>();
+        }
+        workOrders.add(workOrder);
+        workOrder.setEmployee(this);
     }
 
     @Override

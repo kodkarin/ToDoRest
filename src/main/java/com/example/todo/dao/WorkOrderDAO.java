@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface WorkOrderDAO {
     public List<WorkOrderEntity> findAllWorkOrders();
-    public List<WorkOrderEntity> findAllWorkOrdersForEmployee(int employeeId);
+    public List<WorkOrderEntity> findAllWorkOrdersForEmployee(EmployeeEntity employeeEntity);
     public List<WorkOrderEntity> findWorkOrdersByStatus(int status);
     public WorkOrderEntity findWorkOrderById(int id);
 

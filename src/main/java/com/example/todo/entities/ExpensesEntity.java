@@ -1,5 +1,7 @@
 package com.example.todo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,6 +12,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "expenses")
 public class ExpensesEntity implements Serializable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -22,11 +25,19 @@ public class ExpensesEntity implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "work_order_id")
-    private int workOrderId;
+    @JsonBackReference (value = "expense-workOrder")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "work_order_id")
+    private WorkOrderEntity workOrder;
 
     public ExpensesEntity() {
 
+    }
+
+    public ExpensesEntity(double amount, String description, WorkOrderEntity workOrder) {
+        this.amount = amount;
+        this.description = description;
+        this.workOrder = workOrder;
     }
 
     // ----Getters---- //
@@ -43,8 +54,8 @@ public class ExpensesEntity implements Serializable {
         return description;
     }
 
-    public int getWorkOrderId() {
-        return workOrderId;
+    public WorkOrderEntity getWorkOrder() {
+        return workOrder;
     }
 
     // ----Setters---- //
@@ -61,8 +72,8 @@ public class ExpensesEntity implements Serializable {
         this.description = description;
     }
 
-    public void setWorkOrderId(int workOrderId) {
-        this.workOrderId = workOrderId;
+    public void setWorkOrder(WorkOrderEntity workOrder) {
+        this.workOrder = workOrder;
     }
 
     @Override

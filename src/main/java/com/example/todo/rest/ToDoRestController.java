@@ -1,6 +1,6 @@
 package com.example.todo.rest;
 
-import com.example.todo.entities.WorkOrderEntity;
+import com.example.todo.entities.*;
 import com.example.todo.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,6 +33,19 @@ public class ToDoRestController {
 
         restService.saveWorkOrder(workOrder);
         return workOrder;
+    }
+
+    @PostMapping("/expenses")
+    public ExpensesEntity addExpense(@RequestBody ExpensesForm expense) {
+
+         return restService.addExpense(expense);
+    }
+
+
+    @PostMapping("/login")
+    public EmployeeEntity login(@RequestBody LoginForm loginForm){
+
+        return restService.loginEmployee(loginForm);
     }
 
     /*@PostMapping("/workorders")

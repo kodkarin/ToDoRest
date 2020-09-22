@@ -34,12 +34,12 @@ public class WorkOrderDAOHibernate implements WorkOrderDAO {
     }
 
     @Override
-    public List<WorkOrderEntity> findAllWorkOrdersForEmployee(int employeeId) {
+    public List<WorkOrderEntity> findAllWorkOrdersForEmployee(EmployeeEntity employeeEntity) {
 
         Session currentSession = entityManager.unwrap(Session.class);
 
-        Query theQuery = currentSession.createQuery("from WorkOrderEntity where employeeId=:employeeId");
-        theQuery.setParameter("employeeId", employeeId);
+        Query theQuery = currentSession.createQuery("from WorkOrderEntity where employee=:employee");
+        theQuery.setParameter("employee", employeeEntity);
         List<WorkOrderEntity> workOrders = theQuery.getResultList();
 
         return workOrders;
@@ -52,7 +52,11 @@ public class WorkOrderDAOHibernate implements WorkOrderDAO {
 
     @Override
     public WorkOrderEntity findWorkOrderById(int id) {
-        return null;
+        Session currentSession = entityManager.unwrap(Session.class);
+
+        Query query = currentSession.createQuery("from WorkOrderEntity where id=:workOrderId");
+        query.setParameter("workOrderId", id);
+        return (WorkOrderEntity) query.getSingleResult();
     }
 
     @Override

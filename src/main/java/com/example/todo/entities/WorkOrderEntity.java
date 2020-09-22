@@ -1,7 +1,11 @@
 package com.example.todo.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Herman
@@ -16,9 +20,11 @@ public class WorkOrderEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "date")
-    private Date date;
+    private String date;
+
+    @Column(name="time")
+    private String time;
 
     @Column(name = "address")
     private String address;
@@ -29,28 +35,34 @@ public class WorkOrderEntity {
     @Column(name = "contact_info")
     private String contactInfo;
 
-    @Column(name = "customer_id")
-    private Integer customerId;
+    @JsonBackReference(value = "workOrder-customer")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "customer_id")
+    private CustomerEntity customer;
 
-    @Column(name = "employee_id")
-    private Integer employeeId;
+    @JsonBackReference (value = "workOrder-employee")
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "employee_id")
+    private EmployeeEntity employee;
 
     @Column(name = "status")
     private Integer status;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "work_started")
-    private Date workStarted;
+    private String workStarted;
 
-    @Temporal(TemporalType.DATE)
     @Column(name = "work_finished")
-    private Date workFinished;
+    private String workFinished;
 
     @Column(name = "travel_hours")
     private double travelHours;
 
     @Column(name = "comment")
     private String comment;
+
+    @JsonManagedReference (value = "expense-workOrder")
+    @OneToMany(mappedBy = "workOrder", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ExpensesEntity> expenses;
 
     public Integer getId() {
         return id;
@@ -60,12 +72,20 @@ public class WorkOrderEntity {
         this.id = id;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public String getAddress() {
@@ -92,20 +112,20 @@ public class WorkOrderEntity {
         this.contactInfo = contactInfo;
     }
 
-    public Integer getCustomerId() {
-        return customerId;
+    public CustomerEntity getCustomer() {
+        return customer;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer(CustomerEntity customer) {
+        this.customer = customer;
     }
 
-    public Integer getEmployeeId() {
-        return employeeId;
+    public EmployeeEntity getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(int employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(EmployeeEntity employee) {
+        this.employee = employee;
     }
 
     public int getStatus() {
@@ -116,19 +136,19 @@ public class WorkOrderEntity {
         this.status = status;
     }
 
-    public Date getWorkStarted() {
+    public String getWorkStarted() {
         return workStarted;
     }
 
-    public void setWorkStarted(Date workStarted) {
+    public void setWorkStarted(String workStarted) {
         this.workStarted = workStarted;
     }
 
-    public Date getWorkFinished() {
+    public String getWorkFinished() {
         return workFinished;
     }
 
-    public void setWorkFinished(Date workFinished) {
+    public void setWorkFinished(String workFinished) {
         this.workFinished = workFinished;
     }
 
@@ -148,6 +168,22 @@ public class WorkOrderEntity {
         this.comment = comment;
     }
 
+    public List<ExpensesEntity> getExpenses() {
+        return expenses;
+    }
+
+    public void setExpenses(List<ExpensesEntity> expenses) {
+        this.expenses = expenses;
+    }
+
+    public void addExpense(ExpensesEntity expense) {
+        if(expenses == null) {
+            expenses = new ArrayList<>();
+        }
+        expenses.add(expense);
+        expense.setWorkOrder(this);
+    }
+
     @Override
     public String toString() {
         return "WorkOrderEntity{" +
@@ -156,8 +192,8 @@ public class WorkOrderEntity {
                 ", address='" + address + '\'' +
                 ", workDescription='" + workDescription + '\'' +
                 ", contactInfo='" + contactInfo + '\'' +
-                ", customerId=" + customerId +
-                ", employeeId=" + employeeId +
+                ", customer=" + customer.getCompanyName() +
+                ", employee=" + employee.getFirstName() + " " + employee.getLastName() +
                 ", status=" + status +
                 ", workStarted=" + workStarted +
                 ", workFinished=" + workFinished +

@@ -1,9 +1,10 @@
 package com.example.todo.service;
 
+import com.example.todo.dao.EmployeeDAO;
+import com.example.todo.dao.ExpensesDAO;
+import com.example.todo.dao.LoginDAO;
 import com.example.todo.dao.WorkOrderDAO;
-import com.example.todo.entities.EmployeeEntity;
-import com.example.todo.entities.LoginEntity;
-import com.example.todo.entities.WorkOrderEntity;
+import com.example.todo.entities.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +15,17 @@ import java.util.List;
 public class RestServiceImplementation implements RestService {
 
     private WorkOrderDAO workOrderDAO;
+    private ExpensesDAO expensesDAO;
+    private EmployeeDAO employeeDAO;
+    private LoginDAO loginDAO;
 
     @Autowired
-    public RestServiceImplementation(WorkOrderDAO workOrderDAO) {
+    public RestServiceImplementation(WorkOrderDAO workOrderDAO, ExpensesDAO expensesDAO,
+                                     EmployeeDAO employeeDAO, LoginDAO loginDAO) {
         this.workOrderDAO = workOrderDAO;
+        this.expensesDAO = expensesDAO;
+        this.employeeDAO = employeeDAO;
+        this.loginDAO = loginDAO;
     }
 
     @Override
@@ -29,7 +37,8 @@ public class RestServiceImplementation implements RestService {
     @Override
     @Transactional
     public List<WorkOrderEntity> findAllWorkOrdersForEmployee(int employeeId) {
-        return workOrderDAO.findAllWorkOrdersForEmployee(employeeId);
+        EmployeeEntity employeeEntity = employeeDAO.findEmployeeById(employeeId);
+        return workOrderDAO.findAllWorkOrdersForEmployee(employeeEntity);
     }
 
     @Override
@@ -52,8 +61,12 @@ public class RestServiceImplementation implements RestService {
 
     @Override
     @Transactional
-    public EmployeeEntity loginEmployee(LoginEntity login) {
-        return null;
+    public EmployeeEntity loginEmployee(LoginForm login) {
+        LoginEntity loginEntity = loginDAO.login(login);
+        if (loginEntity == null) {
+            return null;
+        }
+        return employeeDAO.loginEmployee(loginEntity);
     }
 
     @Override
@@ -67,5 +80,14 @@ public class RestServiceImplementation implements RestService {
     @Transactional
     public void deleteWorkOrderById(int workOrderId) {
 
+    }
+
+    @Override
+    @Transactional
+    public ExpensesEntity addExpense(ExpensesForm expense) {
+        WorkOrderEntity workOrder = workOrderDAO.findWorkOrderById(expense.getWorkOrderId());
+        ExpensesEntity newExpense = new ExpensesEntity(expense.getAmount(), expense.getDescription(), workOrder);
+        expensesDAO.addExpense(newExpense);
+        return newExpense;
     }
 }
