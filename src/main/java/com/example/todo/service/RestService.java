@@ -13,5 +13,6 @@ public interface RestService {
     public EmployeeEntity loginEmployee(LoginForm login);
     public void saveWorkOrder(WorkOrderEntity workOrder);
     public void deleteWorkOrderById(int workOrderId);
-    public ExpensesEntity addExpense(ExpensesForm expense);
+    public void addExpense(ExpensesEntity expense);
+    //public ExpensesEntity addExpense(ExpensesForm expense);
 }

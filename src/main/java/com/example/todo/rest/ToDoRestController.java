@@ -35,12 +35,18 @@ public class ToDoRestController {
         return workOrder;
     }
 
-    @PostMapping("/expenses")
+    /*@PostMapping("/expenses")
     public ExpensesEntity addExpense(@RequestBody ExpensesForm expense) {
 
          return restService.addExpense(expense);
-    }
+    }*/
 
+    @PostMapping("/expenses")
+    public ExpensesEntity addExpense(@RequestBody ExpensesEntity expense) {
+
+        restService.addExpense(expense);
+        return expense;
+    }
 
     @PostMapping("/login")
     public EmployeeEntity login(@RequestBody LoginForm loginForm){
