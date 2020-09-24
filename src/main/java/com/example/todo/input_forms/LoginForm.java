@@ -1,4 +1,4 @@
-package com.example.todo.entities;
+package com.example.todo.input_forms;
 
 public class LoginForm {
 

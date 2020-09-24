@@ -1,6 +1,10 @@
 package com.example.todo.service;
 
 import com.example.todo.entities.*;
+import com.example.todo.input_forms.ExpensesForm;
+import com.example.todo.input_forms.LoginForm;
+import com.example.todo.input_forms.WorkOrderFinishedForm;
+import com.example.todo.input_forms.WorkOrderStatusForm;
 
 import java.util.List;
 
@@ -15,5 +19,6 @@ public interface RestService {
     public void deleteWorkOrderById(int workOrderId);
     public ExpensesEntity addExpense(ExpensesForm expense);
     public WorkOrderEntity updateWorkOrderStatus(WorkOrderStatusForm workOrderStatus);
+    public WorkOrderEntity finishWorkOrder(WorkOrderFinishedForm finishedWorkOrder);
     //public ExpensesEntity addExpense(ExpensesForm expense);
 }

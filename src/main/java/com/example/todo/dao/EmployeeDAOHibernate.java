@@ -2,15 +2,12 @@ package com.example.todo.dao;
 
 import com.example.todo.entities.EmployeeEntity;
 import com.example.todo.entities.LoginEntity;
-import com.example.todo.entities.LoginForm;
-import com.example.todo.entities.WorkOrderEntity;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
-import java.util.List;
 
 @Repository
 public class EmployeeDAOHibernate implements EmployeeDAO {

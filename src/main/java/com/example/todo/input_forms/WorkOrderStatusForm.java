@@ -1,4 +1,4 @@
-package com.example.todo.entities;
+package com.example.todo.input_forms;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;

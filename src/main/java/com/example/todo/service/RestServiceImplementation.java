@@ -5,6 +5,10 @@ import com.example.todo.dao.ExpensesDAO;
 import com.example.todo.dao.LoginDAO;
 import com.example.todo.dao.WorkOrderDAO;
 import com.example.todo.entities.*;
+import com.example.todo.input_forms.ExpensesForm;
+import com.example.todo.input_forms.LoginForm;
+import com.example.todo.input_forms.WorkOrderFinishedForm;
+import com.example.todo.input_forms.WorkOrderStatusForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -96,6 +100,19 @@ public class RestServiceImplementation implements RestService {
         if (workOrderStatus.getStatus() == 1) {
             workOrderToUpdate.setEmployee(null);
         }
+        workOrderDAO.saveWorkOrder(workOrderToUpdate);
+        return workOrderToUpdate;
+    }
+
+    @Override
+    @Transactional
+    public WorkOrderEntity finishWorkOrder(WorkOrderFinishedForm finishedWorkOrder) {
+        WorkOrderEntity workOrderToUpdate = workOrderDAO.findWorkOrderById(finishedWorkOrder.getId());
+        workOrderToUpdate.setStatus(finishedWorkOrder.getStatus());
+        workOrderToUpdate.setWorkStarted(finishedWorkOrder.getWorkStarted());
+        workOrderToUpdate.setWorkFinished(finishedWorkOrder.getWorkFinished());
+        workOrderToUpdate.setTravelHours(finishedWorkOrder.getTravelHours());
+        workOrderToUpdate.setComment(finishedWorkOrder.getComment());
         workOrderDAO.saveWorkOrder(workOrderToUpdate);
         return workOrderToUpdate;
     }

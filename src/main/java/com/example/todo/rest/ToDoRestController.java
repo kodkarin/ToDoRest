@@ -1,6 +1,10 @@
 package com.example.todo.rest;
 
 import com.example.todo.entities.*;
+import com.example.todo.input_forms.ExpensesForm;
+import com.example.todo.input_forms.LoginForm;
+import com.example.todo.input_forms.WorkOrderFinishedForm;
+import com.example.todo.input_forms.WorkOrderStatusForm;
 import com.example.todo.service.RestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,10 @@ public class ToDoRestController {
         return restService.findAllWorkOrdersForEmployee(employeeId);
     }
 
+    @PostMapping("/workorders/status/finalReport")
+    public WorkOrderEntity finishWorkOrder(@RequestBody WorkOrderFinishedForm finishedWorkOrder) {
+        return restService.finishWorkOrder(finishedWorkOrder);
+    }
     @PostMapping("/workorders/status")
     public WorkOrderEntity updateWorkOrderStatus(@RequestBody WorkOrderStatusForm workOrderStatus) {
         return restService.updateWorkOrderStatus(workOrderStatus);

@@ -1,7 +1,7 @@
 package com.example.todo.dao;
 
 import com.example.todo.entities.LoginEntity;
-import com.example.todo.entities.LoginForm;
+import com.example.todo.input_forms.LoginForm;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
