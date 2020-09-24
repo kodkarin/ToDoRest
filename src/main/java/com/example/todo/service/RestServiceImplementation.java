@@ -82,18 +82,30 @@ public class RestServiceImplementation implements RestService {
 
     }
 
-    @Override
+    /*@Override
+    @Transactional
     public void addExpense(ExpensesEntity expense) {
         expensesDAO.addExpense(expense);
+    }*/
+
+    @Override
+    @Transactional
+    public WorkOrderEntity updateWorkOrderStatus(WorkOrderStatusForm workOrderStatus) {
+        WorkOrderEntity workOrderToUpdate = workOrderDAO.findWorkOrderById(workOrderStatus.getId());
+        workOrderToUpdate.setStatus(workOrderStatus.getStatus());
+        if (workOrderStatus.getStatus() == 1) {
+            workOrderToUpdate.setEmployee(null);
+        }
+        workOrderDAO.saveWorkOrder(workOrderToUpdate);
+        return workOrderToUpdate;
     }
 
-
-    /*@Override
+    @Override
     @Transactional
     public ExpensesEntity addExpense(ExpensesForm expense) {
         WorkOrderEntity workOrder = workOrderDAO.findWorkOrderById(expense.getWorkOrderId());
         ExpensesEntity newExpense = new ExpensesEntity(expense.getAmount(), expense.getDescription(), workOrder);
         expensesDAO.addExpense(newExpense);
         return newExpense;
-    }*/
+    }
 }
